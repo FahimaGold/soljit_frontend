@@ -25,3 +25,32 @@ export function useAccessToken() {
 
   return accessToken;
 }
+
+
+export function useCandidacyRecord(){
+    const [candidacyRecord, setcandidacyRecord] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const accessToken = useAccessToken();
+    const fetchCandidacyRecord = async () => {
+        
+        console.log("Access Token " + accessToken)
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await axios.get('http://localhost:3000/candidacy/record', {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+            setcandidacyRecord(response.data);
+        } catch (error) {
+            console.error('Error fetching record data:', error);
+            setError('Error fetching candidate details');
+        }finally {
+            setLoading(false);
+          }
+    }
+    
+   return {candidacyRecord, loading, error, fetchCandidacyRecord};
+}
