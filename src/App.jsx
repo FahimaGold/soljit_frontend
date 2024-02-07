@@ -1,15 +1,14 @@
 import { useState } from 'react'
+import { useAccessToken } from './hooks/useSalesForceData';
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const accessToken = useAccessToken();
 
   return (
     <> 
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <p>{accessToken}</p>
       </div>
     </>
   )
